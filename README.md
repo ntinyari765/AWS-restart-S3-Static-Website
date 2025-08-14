@@ -23,6 +23,7 @@ Connected to the EC2 instance via AWS Systems Manager Session Manager.
 ```bash
 sudo su -l ec2-user
 pwd
+```
 
 ### ***Task 2: Configure AWS CLI**
 Configured the AWS Command Line Interface (CLI) on an Amazon Linux EC2 instance for S3 operations.
