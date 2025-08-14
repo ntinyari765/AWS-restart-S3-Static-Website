@@ -45,7 +45,7 @@ cd static-website
 ls
 ```
 
-### **Task 7: Deploy Static Website to S3**
+### **Task 4: Deploy Static Website to S3**
 Configures S3 bucket for website hosting and uploads static website files with public access.
 ```bash
 aws s3 website s3://ntinyari765/ --index-document index.html
