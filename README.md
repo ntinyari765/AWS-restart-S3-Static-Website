@@ -26,7 +26,7 @@ pwd
 ```
 ![Task 1 Screenshot](./images/ec2_ssh.png)
 
-### ***Task 2: Configure AWS CLI**
+### **Task 2: Configure AWS CLI**
 Configured the AWS Command Line Interface (CLI) on an Amazon Linux EC2 instance for S3 operations.
 ```bash
 aws configure
@@ -36,7 +36,7 @@ aws configure
 Created a uniquely named S3 bucket in `us-west-2` region with proper configuration.
 ```bash
 aws s3api create-bucket \
-  --bucket ntinyari765\
+  --bucket <YOUR-BUCKET-NAME> \
   --region us-west-2 \
   --create-bucket-configuration LocationConstraint=us-west-2
 ```
@@ -54,16 +54,38 @@ ls
 ### **Task 5: Deploy Static Website to S3**
 Configures S3 bucket for website hosting and uploads static website files with public access.
 ```bash
-aws s3 website s3://ntinyari765/ --index-document index.html
-aws s3 cp ./static-website/ s3://ntinyari765/ \
+aws s3 website s3://<YOUR-BUCKET-NAME>/ --index-document index.html
+aws s3 cp ./static-website/ s3://<YOUR-BUCKET-NAME>/ \
   --recursive \
   --acl public-read
-aws s3 ls s3://ntinyari765/
+aws s3 ls s3://<YOUR-BUCKET-NAME>/
 ```
 ![Task 5 Screenshot](./images/task%205.png)
 
-The static website can be accessed at: http://ntinyari765.s3-website-us-west-2.amazonaws.com
+The static website can be accessed at: http://<YOUR-BUCKET-NAME>.s3-website-us-west-2.amazonaws.com
+
 ![The Static Website](./images/Website_screenshot.png)
 
 After uploading files via AWS CLI, the bucket contents appear in the S3 Management Console as shown:
+
 ![S3 Bucket Contents](./images/s3_bucket.png)
+
+### **Task 6: Create Automated Deployment Script**
+
+Creates a reusable bash script (`update-website.sh`) to sync local changes to the S3 bucket.
+```bash
+cd ~
+touch update-website.sh
+chmod +x update-website.sh  # Make executable
+vi ~/sysops-activity-files/static-website/index.htm # Makes some changes to check if it updates
+./update-website.sh
+```
+![Task 8 Screenshot](./images/update_website.png)
+The update-website.sh script contains the aws s3 cp command
+```
+#!/bin/bash aws s3 cp /home/ec2-user/sysops-activity-files/static-website/ s3://<my-bucket>/ --recursive --acl public-read
+```
+![The Bash Script](./images/bash_script.png)
+
+## Conclusion
+This lab demonstrated the complete process of deploying a static website to Amazon S3 using the AWS CLI from an EC2 instance. I successfully created and configured an S3 bucket, uploaded website files, enabled static website hosting, and verified the site’s accessibility through its public URL. Additionally, I created a reusable update script that automates the process of syncing new or modified files to the S3 bucket, ensuring efficient and repeatable deployments.
