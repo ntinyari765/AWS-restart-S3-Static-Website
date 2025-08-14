@@ -24,3 +24,26 @@ Connected to the EC2 instance via AWS Systems Manager Session Manager.
 sudo su -l ec2-user
 pwd
 
+ ### ***Task 2: Configure AWS CLI**
+Configured the AWS Command Line Interface (CLI) on an Amazon Linux EC2 instance for S3 operations.
+
+### **Task 3: Create S3 Bucket via AWS CLI**
+Created a uniquely named S3 bucket in `us-west-2` region with proper configuration.
+```bash
+aws s3api create-bucket \
+  --bucket ntinyari765\
+  --region us-west-2 \
+  --create-bucket-configuration LocationConstraint=us-west-2
+
+### **Task 3: Extract Static Website Files**
+Prepared the website files for deployment to S3 by extracting the lab-provided archive.
+```bash
+cd ~/sysops-activity-files
+tar xvzf static-website-v2.tar.gz
+cd static-website
+ls
+
+### **Task 7: Deploy Static Website to S3**
+Configures S3 bucket for website hosting and uploads static website files with public access.
+```bash
+aws s3 website s3://ntinyari765/ --index-document index.html
